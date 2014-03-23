@@ -12,6 +12,10 @@ def find_neg_cycle(start, vertices, edges):
 
     returns: list of edges forming cycle or None
     """
+    #print 'graph:'
+    #print start, vertices
+    #print edges
+    #print '---'
 
     d = dict.fromkeys(vertices, INF)
     p = dict.fromkeys(vertices)
@@ -26,14 +30,24 @@ def find_neg_cycle(start, vertices, edges):
                 if i == len(vertices) - 1:
                     v = v2
                     result = []
+                    #print p
                     while True:
+                        #print result
                         assert len(result) <= len(vertices)
                         v, _, _ = e = p[v]
                         result.append(e)
-                        if v == v2:
-                            result.reverse()
-                            check_neg_cycle(result)
-                            return result
+
+                        for i in range(len(result)):
+                            if result[i][1] == result[-1][0]:
+                                result = result[i:]
+                                result.reverse()
+                                check_neg_cycle(result)
+                                return result
+
+                        #if v == v2:
+                        #    result.reverse()
+                        #    check_neg_cycle(result)
+                        #    return result
 
     return None
 
